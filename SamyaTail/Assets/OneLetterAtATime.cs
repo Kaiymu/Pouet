@@ -12,43 +12,33 @@ public class OneLetterAtATime : MonoBehaviour {
     private string _str;
     private bool _stopWritingText;
 
+    private int _index = 0;
+
     private void Awake() {
         _textMesh = GetComponent<TextMesh>();
     }
 
-    private void OnEnable() {
-        StopCoroutineManually();
-    }
-
     private void OnDisable() {
-        StopCoroutineManually();
-    }
-
-
-    public void StopCoroutineManually() {
-        _stopWritingText = true;
-        StopAllCoroutines();
+        _index = 0;
+        _str = string.Empty;
         _textMesh.text = string.Empty;
     }
 
     public IEnumerator AnimateText(UnityAction callbackFinishedText = null) {
-        _stopWritingText = false;
-        int i = 0;
-        _str = "";
+        yield return new WaitForSeconds(animateTextSeconds);
+        _str += completeText[_index++];
+        _textMesh.text = _str;
 
-        while (i < completeText.Length) {
-            if (_stopWritingText) {
-                StopAllCoroutines();
-                yield return null;
+        if (_index <= (completeText.Length - 1)) {
+            if (gameObject.activeInHierarchy) {
+                StartCoroutine(AnimateText(callbackFinishedText));
             }
-
-            _str += completeText[i++];
-            _textMesh.text = _str;
-            yield return new WaitForSeconds(animateTextSeconds);
+        }
+        else {
+            if (callbackFinishedText != null) {
+                callbackFinishedText();
+            }
         }
 
-        if (callbackFinishedText != null) {
-            callbackFinishedText();
-        }
     }
 }
