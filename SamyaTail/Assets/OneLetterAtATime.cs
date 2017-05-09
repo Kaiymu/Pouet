@@ -20,21 +20,28 @@ public class OneLetterAtATime : MonoBehaviour {
         StopCoroutineManually();
     }
 
+    private void OnDisable() {
+        StopCoroutineManually();
+    }
+
+
     public void StopCoroutineManually() {
         _stopWritingText = true;
         StopAllCoroutines();
         _textMesh.text = string.Empty;
     }
 
-    private void OnDisable() {
-        StopCoroutineManually();
-    }
-
     public IEnumerator AnimateText(UnityAction callbackFinishedText = null) {
         _stopWritingText = false;
         int i = 0;
         _str = "";
-        while (i < completeText.Length && !_stopWritingText) {
+
+        while (i < completeText.Length) {
+            if (_stopWritingText) {
+                StopAllCoroutines();
+                yield return null;
+            }
+
             _str += completeText[i++];
             _textMesh.text = _str;
             yield return new WaitForSeconds(animateTextSeconds);

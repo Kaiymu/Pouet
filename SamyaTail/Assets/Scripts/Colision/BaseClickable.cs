@@ -18,15 +18,13 @@ public abstract class BaseClickable : MonoBehaviour {
     }
 		
     private bool _wasOnObject = false;
+
+    private void OnMouseDown() {
+        _hasBeenClicked = true;
+    }
+
     void Update () {
-		if(Input.GetMouseButtonDown(0)) {
-			if(_CalculateClickedOn()) {
-				_hasBeenClicked = true;
-            }
-		}
-
         if (_hasBeenClicked) {
-
             if (!_isInSamyasRange()) {
                 if (_wasOnObject) {
                     _hasBeenClicked = false;
