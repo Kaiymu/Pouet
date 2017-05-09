@@ -30,6 +30,7 @@ public class TextClickable : BaseClickable {
         _indexOneLetter = 0;
 		for(int i = 0; i < oneLetterAnim.Length; i++)
 		{
+            oneLetterAnim[i].StopCoroutineManually();
 			oneLetterAnim[i].gameObject.SetActive(false);
 		}
     }

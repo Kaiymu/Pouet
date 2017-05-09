@@ -22,23 +22,27 @@ public abstract class BaseClickable : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0)) {
 			if(_CalculateClickedOn()) {
 				_hasBeenClicked = true;
-			}
+            }
 		}
 
-        if (!_isInSamyasRange()) {
-			if (_wasOnObject) {
-				_hasBeenClicked = false;
-				_wasOnObject = false;
-				_OnLeavingObject();
-			}
-		} else {
-			if(!_wasOnObject) {
-				if(_hasBeenClicked) {
-					_wasOnObject = true;
-		        _OnClickedObject();
-				}
-			}
-		}
+        if (_hasBeenClicked) {
+
+            if (!_isInSamyasRange()) {
+                if (_wasOnObject) {
+                    _hasBeenClicked = false;
+                    _wasOnObject = false;
+                    _OnLeavingObject();
+                }
+            }
+            else {
+                if (!_wasOnObject) {
+                    if (_hasBeenClicked) {
+                        _wasOnObject = true;
+                        _OnClickedObject();
+                    }
+                }
+            }
+        }
 	}
 
 	private bool _CalculateClickedOn() {

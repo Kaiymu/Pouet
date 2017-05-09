@@ -6,24 +6,35 @@ using UnityEngine.Events;
 public class OneLetterAtATime : MonoBehaviour {
 
     public string completeText;
-
     public float animateTextSeconds = 0.5f;
+
     private TextMesh _textMesh;
     private string _str;
+    private bool _stopWritingText;
 
     private void Awake() {
         _textMesh = GetComponent<TextMesh>();
     }
 
-    private void OnDisable() {
+    private void OnEnable() {
+        StopCoroutineManually();
+    }
+
+    public void StopCoroutineManually() {
+        _stopWritingText = true;
         StopAllCoroutines();
         _textMesh.text = string.Empty;
     }
 
+    private void OnDisable() {
+        StopCoroutineManually();
+    }
+
     public IEnumerator AnimateText(UnityAction callbackFinishedText = null) {
+        _stopWritingText = false;
         int i = 0;
         _str = "";
-        while (i < completeText.Length) {
+        while (i < completeText.Length && !_stopWritingText) {
             _str += completeText[i++];
             _textMesh.text = _str;
             yield return new WaitForSeconds(animateTextSeconds);
