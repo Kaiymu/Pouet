@@ -23,10 +23,10 @@ public class SoundClickable : BaseClickable {
         yield return new WaitForSeconds(time);
 
         _indexSoundAudio++;
-        var audioSource = audioSourceList[_indexSoundAudio];
-        audioSource.PlayOneShot(audioSource.clip);
 
         if (_indexSoundAudio <= (audioSourceList.Length - 1)) {
+            var audioSource = audioSourceList[_indexSoundAudio];
+            audioSource.PlayOneShot(audioSource.clip);
             StartCoroutine(_CallbackFinishedAudio(audioSource.clip.length));
         }
 
