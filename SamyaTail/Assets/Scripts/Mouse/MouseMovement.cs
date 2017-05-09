@@ -22,6 +22,11 @@ public class MouseMovement : MonoBehaviour {
             _FlipAnim(_playerPosition.x - transform.position.x);
         }
 
+        // Here I block Samya, I put 0 but we can put whatever we want.
+        if (_playerPosition.x < 0) {
+            _playerPosition = new Vector2(0, _playerPosition.y);
+        }
+
         transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), _playerPosition, _playerSpeed * Time.deltaTime);
     }
 

@@ -1,0 +1,3 @@
+1/ Tu touche pas à ses prefabs, sauf si c'est méga important. Si tu veux les mettre dans la scènes, vas te faire enculer tu utilise le menu en haut appeler "Custom object"
+2/ L'utilisation est simple, si Samya clique sur l'objet elle va s'y approché, quand elle arrive à porté, elle joue le truc de l'objet, que ça soit texte / vidéo / sons
+3/ J'ai mis 0 sprite, du coup on a juste à mettre nos éléments et mettre des sprites dégueu de et voilà. Genre une commode, tu clique dessus, elle jouera du texte par ex.

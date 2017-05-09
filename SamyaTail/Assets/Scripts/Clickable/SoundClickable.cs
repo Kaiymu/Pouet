@@ -16,10 +16,10 @@ public class SoundClickable : BaseClickable {
         var audioSource = audioSourceList[_indexSoundAudio];
         audioSource.PlayOneShot(audioSource.clip);
 
-        StartCoroutine(_CallbackFinishedSound(audioSource.clip.length));
+        StartCoroutine(_CallbackFinishedAudio(audioSource.clip.length));
     }
 
-    private IEnumerator _CallbackFinishedSound(float time) {
+    private IEnumerator _CallbackFinishedAudio(float time) {
         yield return new WaitForSeconds(time);
 
         _indexSoundAudio++;
@@ -27,7 +27,7 @@ public class SoundClickable : BaseClickable {
         audioSource.PlayOneShot(audioSource.clip);
 
         if (_indexSoundAudio <= (audioSourceList.Length - 1)) {
-            StartCoroutine(_CallbackFinishedSound(audioSource.clip.length));
+            StartCoroutine(_CallbackFinishedAudio(audioSource.clip.length));
         }
 
         yield return null;

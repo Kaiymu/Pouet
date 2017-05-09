@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class MenuItemTriggers : MonoBehaviour {
+public class MenuItemClickable : MonoBehaviour {
     [MenuItem("Custom Objects/Clickable text")]
-    private static void CreateLookAt() {
+    private static void CreateClickableText() {
         Object o = Resources.Load("Prefabs/Clickable/ClickableText");
         InstantiateObject(o);
     }
 
     [MenuItem("Custom Objects/Clickable audio")]
-    private static void CreateMovingObject() {
+    private static void CreateClickableAudio() {
         Object o = Resources.Load("Prefabs/Clickable/ClickableAudio");
         InstantiateObject(o);
     }
+
+    [MenuItem("Custom Objects/Clickable video")]
+    private static void CreateClickableVideo() {
+        Object o = Resources.Load("Prefabs/Clickable/ClickableVideo");
+        InstantiateObject(o);
+    }
+
 
     private static void InstantiateObject(Object o) {
         GameObject g = Instantiate(o, Vector3.zero, Quaternion.identity) as GameObject;
