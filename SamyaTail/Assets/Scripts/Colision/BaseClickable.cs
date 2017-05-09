@@ -4,49 +4,67 @@ using UnityEngine;
 
 public abstract class BaseClickable : MonoBehaviour {
 
-    private const float _distanceClick = 1f;
+    private const float _distanceClick = 3f;
 
     protected GameObject _samya;
+    private Renderer _renderer;
+
+	private bool _hasBeenClicked;
 
     private void Start()
     {
         _samya = GameObject.FindGameObjectWithTag("Samya");
+        _renderer = GetComponent<Renderer>();
     }
-
-    bool _calculate = false;
+		
+    private bool _wasOnObject = false;
     void Update () {
-        Renderer _renderer = GetComponent<Renderer>();
+		if(Input.GetMouseButtonDown(0)) {
+			if(_CalculateClickedOn()) {
+				_hasBeenClicked = true;
+			}
+		}
+
+        if (!_isInSamyasRange()) {
+			if (_wasOnObject) {
+				_hasBeenClicked = false;
+				_wasOnObject = false;
+				_OnLeavingObject();
+			}
+		} else {
+			if(!_wasOnObject) {
+				if(_hasBeenClicked) {
+					_wasOnObject = true;
+		        _OnClickedObject();
+				}
+			}
+		}
+	}
+
+	private bool _CalculateClickedOn() {
+
+		Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
+		if (hit != null && hit.collider != null)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+
+    private bool _isInSamyasRange()
+    {
         float distanceSamyaClick = Mathf.Abs(_samya.transform.position.x - _renderer.bounds.center.x);
+        return distanceSamyaClick < _distanceClick;
+    }
+		
 
-        if (distanceSamyaClick > _distanceClick)
-        {
-            _calculate = true;
-            return;
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-
-            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
-            if (hit != null && hit.collider != null)
-            {
-                _OnClickedObject();
-            }
-        }
-
-        if(_calculate)
-        {
-            float distanceSamyaClick2 = Mathf.Abs(_samya.transform.position.x - _renderer.bounds.center.x);
-
-            Debug.LogError(distanceSamyaClick2 + " " + _distanceClick);
-            if (distanceSamyaClick2 < _distanceClick)
-            {
-                _calculate = false;
-                _OnClickedObject();
-            }
-        }
+    protected virtual void _OnClickedObject()
+    {
+        _wasOnObject = true;
     }
 
-    protected abstract void _OnClickedObject();
+    protected abstract void _OnLeavingObject();
 }
