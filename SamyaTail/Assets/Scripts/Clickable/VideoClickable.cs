@@ -5,50 +5,42 @@ using UnityEngine.Video;
 
 public class VideoClickable : BaseClickable {
 
-    public VideoPlayer[] videoSourceList;
+    public GameObject[] gameObjectList;
 
-    private int _indexVideo = 0;
+    private int _indexGameObjectList = 0;
 
-    protected override void _OnClickedObject() {
-        for (int i = 0; i < videoSourceList.Length; i++) {
-            videoSourceList[i].gameObject.SetActive(true);
+
+    private void _TypeElement(GameObject _test) {
+        if (_test.GetComponent<VideoPlayer>() != null) {
+
         }
+        else if (_test.GetComponent<SpriteRenderer>() != null) {
+            _test.gameObject.SetActive(true);
+        }
+        else if (_test.GetComponent<AudioSource>() != null) {
 
-        var videoSource = videoSourceList[_indexVideo];
-        videoSource.Play();
+        }
+        else if (_test.GetComponent<TextMesh>() != null) {
 
-        StartCoroutine(_CallbackFinishedVideo(videoSource.clip.length));
+        }
     }
 
-    private IEnumerator _CallbackFinishedVideo(double time) {
-        float timeFloat = (float)time;
-        yield return new WaitForSeconds(timeFloat);
+    private IEnumerator _CallbackFinishedSpriteRenderer(float duration) {
+        yield return new WaitForSeconds(duration);
 
-        _indexVideo++;
-
-        if (_indexVideo <= (videoSourceList.Length - 1)) {
-            var videoSource = videoSourceList[_indexVideo];
-            videoSource.Play();
-            StartCoroutine(_CallbackFinishedVideo(videoSource.clip.length));
+        _indexGameObjectList++;
+        /*
+         * 
+        if (_indexGameObjectList <= (gameObjectList.Length - 1)) {
+            var sprite = gameObjectList[_indexSpriteRenderer];
+            sprite.gameObject.SetActive(true);
+            StartCoroutine(_CallbackFinishedSpriteRenderer());
         }
         else {
-            _HideVideo();
+            _HideSprites();
         }
+         * */
 
         yield return null;
-    }
-
-    protected override void _OnLeavingObject() {
-        StopAllCoroutines();
-
-        _indexVideo = 0;
-        _HideVideo();
-    }
-
-    private void _HideVideo() {
-        for (int i = 0; i < videoSourceList.Length; i++) {
-            videoSourceList[i].Stop();
-            videoSourceList[i].gameObject.SetActive(false);
-        }
     }
 }
