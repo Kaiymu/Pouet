@@ -22,6 +22,18 @@ public class MenuItemClickable : MonoBehaviour {
         InstantiateObject(o);
     }
 
+    [MenuItem("Custom Objects/Clickable Generic")]
+    private static void CreateClickableGeneric() {
+        Object o = Resources.Load("Prefabs/Clickable/ClickableGeneric");
+        InstantiateObject(o);
+    }
+
+
+    [MenuItem("Custom Objects/Clickable Sprite")]
+    private static void CreateClickableSprite() {
+        Object o = Resources.Load("Prefabs/Clickable/ClickableSprite");
+        InstantiateObject(o);
+    }
 
     private static void InstantiateObject(Object o) {
         GameObject g = Instantiate(o, Vector3.zero, Quaternion.identity) as GameObject;
