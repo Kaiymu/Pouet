@@ -27,6 +27,7 @@ public class VideoClickable : BaseClickable {
 
 	protected override void _OnLeavingObject()
 	{
+		//Bien ouej l'erreur de compil négro
 	}
 
     private IEnumerator _CallbackFinishedSpriteRenderer(float duration) {
