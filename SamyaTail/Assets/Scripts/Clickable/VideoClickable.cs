@@ -23,7 +23,11 @@ public class VideoClickable : BaseClickable {
         else if (_test.GetComponent<TextMesh>() != null) {
 
         }
-    }
+	}
+
+	protected override void _OnLeavingObject()
+	{
+	}
 
     private IEnumerator _CallbackFinishedSpriteRenderer(float duration) {
         yield return new WaitForSeconds(duration);
