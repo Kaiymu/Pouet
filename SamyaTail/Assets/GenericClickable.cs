@@ -13,6 +13,10 @@ public class GenericClickable : BaseClickable {
     private int _indexGameObjectList = 0;
 
     protected override void _OnClickedObject() {
+
+        _indexGameObjectList = 0;
+        StopAllCoroutines();
+
         _onLeavingObject = false;
         
         float duration = _TypeElement(gameObjectList[_indexGameObjectList]);

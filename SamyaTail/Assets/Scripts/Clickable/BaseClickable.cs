@@ -21,6 +21,7 @@ public abstract class BaseClickable : MonoBehaviour {
 
     private void OnMouseDown() {
         _hasBeenClicked = true;
+        _wasOnObject = false;
     }
 
     void Update () {

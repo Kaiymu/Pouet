@@ -11,6 +11,10 @@ public class TextClickable : BaseClickable {
 
     protected override void _OnClickedObject()
     {
+        _indexOneLetter = 0;
+        StopAllCoroutines();
+
+
         for (int i = 0; i < oneLetterAnim.Length; i++) {
             oneLetterAnim[i].gameObject.SetActive(true);
         }

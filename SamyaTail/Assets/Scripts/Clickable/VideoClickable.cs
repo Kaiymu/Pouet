@@ -10,6 +10,11 @@ public class VideoClickable : BaseClickable {
     private int _indexVideo = 0;
 
     protected override void _OnClickedObject() {
+
+        _indexVideo = 0;
+        StopAllCoroutines();
+
+
         for (int i = 0; i < videoSourceList.Length; i++) {
             videoSourceList[i].gameObject.SetActive(true);
         }

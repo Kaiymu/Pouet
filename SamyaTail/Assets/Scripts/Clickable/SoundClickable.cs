@@ -9,6 +9,9 @@ public class SoundClickable : BaseClickable {
     private int _indexSoundAudio = 0;
 
     protected override void _OnClickedObject() {
+        _indexSoundAudio = 0;
+        StopAllCoroutines();
+
         for (int i = 0; i < audioSourceList.Length; i++) {
             audioSourceList[i].gameObject.SetActive(true);
         }

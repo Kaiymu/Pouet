@@ -11,6 +11,10 @@ public class SpriteClickable : BaseClickable {
     private int _indexSpriteRenderer = 0;
 
     protected override void _OnClickedObject() {
+
+        _indexSpriteRenderer = 0;
+        StopAllCoroutines();
+
         spriteRenderer[0].gameObject.SetActive(true);
         StartCoroutine(_CallbackFinishedSpriteRenderer());
     }
