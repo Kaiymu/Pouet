@@ -11,6 +11,7 @@ namespace UnityStandardAssets._2D
         public float lookAheadReturnSpeed = 0.5f;
         public float lookAheadMoveThreshold = 0.1f;
 		public float yDisplacementValue = 0.15f;
+		public float xLeftLockValue = 0.45f;
 
         private float m_OffsetZ;
         private Vector3 m_LastTargetPosition;
@@ -44,7 +45,16 @@ namespace UnityStandardAssets._2D
             }
 
             Vector3 aheadTargetPos = target.position + m_LookAheadPos + Vector3.forward*m_OffsetZ;
+
+			// Adds a y value
 			aheadTargetPos.y += yDisplacementValue;
+
+			// Locks on left of game according to target position
+			if (aheadTargetPos.x <= xLeftLockValue)
+			{
+				aheadTargetPos.x = xLeftLockValue;
+			}
+
             Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref m_CurrentVelocity, damping);
 
             transform.position = newPos;
