@@ -8,37 +8,59 @@ public class OneLetterAtATime : MonoBehaviour {
     public string completeText;
     public float animateTextSeconds = 0.5f;
 
-    private TextMesh _textMesh;
-    private string _str;
-    private bool _stopWritingText;
-
+    [HideInInspector]
+    public TextMesh textMesh;
+    [HideInInspector]
+    public string str;
+    [HideInInspector]
     public int index = 0;
 
+    private float _timeValue;
+    public UnityAction callbackFinishedText;
+
+    public void ResetParameters() {
+        if(textMesh == null) {
+            textMesh = GetComponent<TextMesh>();
+        }
+
+        index = 0;
+        str = string.Empty;
+        textMesh.text = string.Empty;
+        readText = false;
+    }
+
     private void Awake() {
-        _textMesh = GetComponent<TextMesh>();
+        textMesh = GetComponent<TextMesh>();
     }
 
     private void OnDisable() {
-        index = 0;
-        _str = string.Empty;
-        _textMesh.text = string.Empty;
+        ResetParameters();
     }
 
-    public IEnumerator AnimateText(UnityAction callbackFinishedText = null) {
-        yield return new WaitForSeconds(animateTextSeconds);
-        _str += completeText[index++];
-        _textMesh.text = _str;
+    [HideInInspector]
+    public bool readText;
 
-        if (index <= (completeText.Length - 1)) {
-            if (gameObject.activeInHierarchy) {
-                StartCoroutine(AnimateText(callbackFinishedText));
-            }
+    private void Update() {
+        if(!readText)
+            return;
+
+        _timeValue += Time.deltaTime;
+
+        if(_timeValue > animateTextSeconds) {
+            _ReadText();
+            _timeValue = 0;
         }
-        else {
-            if (callbackFinishedText != null) {
+    }
+
+    private void _ReadText() {
+        if(index <= (completeText.Length - 1)) {
+            str += completeText[index++];
+            textMesh.text = str;
+        } else {
+            if(callbackFinishedText != null) {
+                readText = false;
                 callbackFinishedText();
             }
         }
-
     }
 }

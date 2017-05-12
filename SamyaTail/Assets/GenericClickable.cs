@@ -14,6 +14,10 @@ public class GenericClickable : BaseClickable {
 
     protected override void _OnClickedObject() {
 
+        for(int i = 0; i < gameObjectList.Length; i++) {
+            gameObjectList[i].SetActive(false);
+        }
+
         _indexGameObjectList = 0;
         StopAllCoroutines();
 
@@ -48,9 +52,9 @@ public class GenericClickable : BaseClickable {
             return audioSource.clip.length;
         }
         else if (textClickable != null) {
+            textClickable.ResetParameters();
             textClickable.gameObject.SetActive(true);
-            textClickable.index = 0;
-            StartCoroutine(textClickable.AnimateText());
+            textClickable.readText = true;
             return (textClickable.animateTextSeconds * textClickable.completeText.Length);
         }
 
