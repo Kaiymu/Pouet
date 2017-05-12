@@ -4,16 +4,19 @@ using UnityEngine;
 
 public abstract class BaseClickable : MonoBehaviour {
 
-    private const float _distanceClick = 3f;
+    private const float _distanceClick = 0.1f;
 
     protected GameObject _samya;
     private Renderer _renderer;
 
 	private bool _hasBeenClicked;
+    [HideInInspector]
+    public MouseMovement _samyaMovement;
 
     private void Start()
     {
         _samya = GameObject.FindGameObjectWithTag("Samya");
+        _samyaMovement = _samya.GetComponent<MouseMovement>();
         _renderer = GetComponent<Renderer>();
     }
 		
@@ -36,24 +39,13 @@ public abstract class BaseClickable : MonoBehaviour {
             else {
                 if (!_wasOnObject) {
                     if (_hasBeenClicked) {
+                        _samyaMovement.canMove = false;
                         _wasOnObject = true;
                         _OnClickedObject();
                     }
                 }
             }
         }
-	}
-
-	private bool _CalculateClickedOn() {
-
-		Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
-		if (hit != null && hit.collider != null)
-		{
-			return true;
-		}
-
-		return false;
 	}
 
 

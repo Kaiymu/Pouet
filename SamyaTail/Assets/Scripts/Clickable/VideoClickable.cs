@@ -44,13 +44,14 @@ public class VideoClickable : BaseClickable {
     }
 
     protected override void _OnLeavingObject() {
-        StopAllCoroutines();
-
-        _indexVideo = 0;
         _HideVideo();
     }
 
     private void _HideVideo() {
+        StopAllCoroutines();
+
+        _indexVideo = 0;
+
         for (int i = 0; i < videoSourceList.Length; i++) {
             videoSourceList[i].Stop();
             videoSourceList[i].gameObject.SetActive(false);

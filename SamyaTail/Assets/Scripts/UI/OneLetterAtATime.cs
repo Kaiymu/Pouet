@@ -12,24 +12,24 @@ public class OneLetterAtATime : MonoBehaviour {
     private string _str;
     private bool _stopWritingText;
 
-    private int _index = 0;
+    public int index = 0;
 
     private void Awake() {
         _textMesh = GetComponent<TextMesh>();
     }
 
     private void OnDisable() {
-        _index = 0;
+        index = 0;
         _str = string.Empty;
         _textMesh.text = string.Empty;
     }
 
     public IEnumerator AnimateText(UnityAction callbackFinishedText = null) {
         yield return new WaitForSeconds(animateTextSeconds);
-        _str += completeText[_index++];
+        _str += completeText[index++];
         _textMesh.text = _str;
 
-        if (_index <= (completeText.Length - 1)) {
+        if (index <= (completeText.Length - 1)) {
             if (gameObject.activeInHierarchy) {
                 StartCoroutine(AnimateText(callbackFinishedText));
             }

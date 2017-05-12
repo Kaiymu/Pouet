@@ -19,23 +19,34 @@ public class TextClickable : BaseClickable {
             oneLetterAnim[i].gameObject.SetActive(true);
         }
 
-        StartCoroutine(oneLetterAnim[_indexOneLetter].AnimateText(_CallbackFinishedText));
+        
+        var oneLetterAnimObj = oneLetterAnim[_indexOneLetter];
+        oneLetterAnimObj.index = 0;
+        StartCoroutine(oneLetterAnimObj.AnimateText(_CallbackFinishedText));
     }
 
     private void _CallbackFinishedText() {
         _indexOneLetter++;
         if (_indexOneLetter <= (oneLetterAnim.Length - 1)) {
-            StartCoroutine(oneLetterAnim[_indexOneLetter].AnimateText());
+            var oneLetterAnimObj = oneLetterAnim[_indexOneLetter];
+            oneLetterAnimObj.index = 0;
+            StartCoroutine(oneLetterAnimObj.AnimateText());
+        } else {
+            _LeavingObject();
         }
     }
 
     protected override void _OnLeavingObject()
     {
+        _LeavingObject();
+    }
+
+    private void _LeavingObject() {
+        _samyaMovement.canMove = true;
         _indexOneLetter = 0;
-		for(int i = 0; i < oneLetterAnim.Length; i++)
-		{
+        for(int i = 0; i < oneLetterAnim.Length; i++) {
             StopCoroutine(oneLetterAnim[i].AnimateText());
-			oneLetterAnim[i].gameObject.SetActive(false);
-		}
+            oneLetterAnim[i].gameObject.SetActive(false);
+        }
     }
 }

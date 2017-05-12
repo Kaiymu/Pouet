@@ -37,11 +37,13 @@ public class SpriteClickable : BaseClickable {
     }
 
     protected override void _OnLeavingObject() {
-        _indexSpriteRenderer = 0;
+
         _HideSprites();
     }
 
     private void _HideSprites() {
+        _indexSpriteRenderer = 0;
+        _samyaMovement.canMove = true;
         for (int i = 0; i < spriteRenderer.Length; i++) {
             spriteRenderer[i].gameObject.SetActive(false);
         }

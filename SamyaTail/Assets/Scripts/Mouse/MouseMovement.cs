@@ -9,14 +9,19 @@ public class MouseMovement : MonoBehaviour {
     private Vector2 _playerPosition;
 
     private SpriteRenderer _playerSprite;
+
     void Start () {
         _mainCamera = Camera.main;
         _playerSprite = GetComponent<SpriteRenderer>();
     }
 
-    private bool _canMove;
+    [HideInInspector]
+    public bool canMove = true;
 	
 	void Update () {
+        if(!canMove)
+            return;
+
         if(Input.GetMouseButtonDown(0)) {
             _playerPosition = _GetPositionsFromMouse();
             _FlipAnim(_playerPosition.x - transform.position.x);

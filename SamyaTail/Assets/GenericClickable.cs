@@ -49,6 +49,7 @@ public class GenericClickable : BaseClickable {
         }
         else if (textClickable != null) {
             textClickable.gameObject.SetActive(true);
+            textClickable.index = 0;
             StartCoroutine(textClickable.AnimateText());
             return (textClickable.animateTextSeconds * textClickable.completeText.Length);
         }
@@ -66,6 +67,7 @@ public class GenericClickable : BaseClickable {
             gameObjectList[i].SetActive(false);
         }
 
+        _samyaMovement.canMove = true;
         _indexGameObjectList = 0;
         StopAllCoroutines();
     }

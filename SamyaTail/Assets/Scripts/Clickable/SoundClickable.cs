@@ -39,6 +39,8 @@ public class SoundClickable : BaseClickable {
     protected override void _OnLeavingObject() {
         StopAllCoroutines();
 
+        _samyaMovement.canMove = true;
+
         _indexSoundAudio = 0;
         for (int i = 0; i < audioSourceList.Length; i++) {
             audioSourceList[i].Stop();
