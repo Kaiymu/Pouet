@@ -10,6 +10,9 @@ public class MouseMovement : MonoBehaviour {
 
     private SpriteRenderer _playerSprite;
 
+    public Sprite _samyaIdle;
+    public Sprite _samyaFocused;
+
     void Start () {
         _mainCamera = Camera.main;
         _playerSprite = GetComponent<SpriteRenderer>();
@@ -19,6 +22,8 @@ public class MouseMovement : MonoBehaviour {
     public bool canMove = true;
 	
 	void Update () {
+        _SwapSprite(canMove);
+
         if(!canMove)
             return;
 
@@ -33,6 +38,14 @@ public class MouseMovement : MonoBehaviour {
         }
 
         transform.position = Vector2.MoveTowards(new Vector2(transform.position.x, transform.position.y), _playerPosition, _playerSpeed * Time.deltaTime);
+    }
+
+    private void _SwapSprite(bool swap) {
+        if(swap) {
+            _playerSprite.sprite = _samyaIdle;
+        } else {
+            _playerSprite.sprite = _samyaFocused;
+        }
     }
 
     private Vector2 _GetPositionsFromMouse() {
