@@ -27,19 +27,21 @@ public class SoundClickable : BaseClickable {
 
         _indexSoundAudio++;
 
-        if (_indexSoundAudio <= (audioSourceList.Length - 1)) {
-            var audioSource = audioSourceList[_indexSoundAudio];
-            audioSource.PlayOneShot(audioSource.clip);
-            StartCoroutine(_CallbackFinishedAudio(audioSource.clip.length));
-        }
+		if (_indexSoundAudio <= (audioSourceList.Length - 1)) {
+			var audioSource = audioSourceList [_indexSoundAudio];
+			audioSource.PlayOneShot (audioSource.clip);
+			StartCoroutine (_CallbackFinishedAudio (audioSource.clip.length));
+		}
+		else
+		{
+			_samyaMovement.canMove = true;
+		}
 
         yield return null;
     }
 
     protected override void _OnLeavingObject() {
         StopAllCoroutines();
-
-        _samyaMovement.canMove = true;
 
         _indexSoundAudio = 0;
         for (int i = 0; i < audioSourceList.Length; i++) {
